@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+enum OrderStatus {
+  PLACED
+  FULFILLED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  PAY_ON_DELIVERY
+  RAZORPAY
+}
+
+enum PaymentStatus {
+  UNPAID
+  PAID
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  // Null until an account imported from the old site logs in for the first time.
+  passwordHash String?
+  // MD5 hash carried over from the old site; cleared once upgraded to passwordHash.
+  legacyMd5    String?
+  contact      String   @default("")
+  city         String   @default("")
+  address      String   @default("")
+  role         Role     @default(CUSTOMER)
+  createdAt    DateTime @default(now())
+
+  cartItems CartItem[]
+  orders    Order[]
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String   @default("")
+  pricePaise  Int
+  imageUrl    String?
+  productType String   @default("")
+  tags        String   @default("")
+  // Removed products are hidden rather than deleted so past orders stay intact.
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+}
+
+model CartItem {
+  userId    Int
+  productId Int
+  quantity  Int @default(1)
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([userId, productId])
+}
+
+model Order {
+  id                Int           @id @default(autoincrement())
+  userId            Int
+  status            OrderStatus   @default(PLACED)
+  paymentMethod     PaymentMethod @default(PAY_ON_DELIVERY)
+  paymentStatus     PaymentStatus @default(UNPAID)
+  totalPaise        Int
+  razorpayOrderId   String?       @unique
+  razorpayPaymentId String?
+  shipName          String
+  shipContact       String
+  shipAddress       String
+  shipCity          String
+  note              String        @default("")
+  createdAt         DateTime      @default(now())
+
+  user  User        @relation(fields: [userId], references: [id])
+  items OrderItem[]
+
+  @@index([userId])
+}
+
+model OrderItem {
+  id         Int    @id @default(autoincrement())
+  orderId    Int
+  productId  Int?
+  // Name and price are copied at purchase time so later edits don't change old orders.
+  name       String
+  pricePaise Int
+  quantity   Int
+
+  order   Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+
+  @@index([orderId])
+}
