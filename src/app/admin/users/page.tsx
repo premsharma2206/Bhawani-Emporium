@@ -15,7 +15,7 @@ export default async function AdminUsersPage() {
       <h1 className="page-title">Users</h1>
       <div className="card overflow-x-auto">
         <table className="w-full text-left text-sm">
-          <thead className="border-b border-stone-200 text-stone-500">
+          <thead className="border-b border-line text-muted">
             <tr>
               <th className="p-3 font-medium">Name</th>
               <th className="p-3 font-medium">Email</th>
@@ -25,7 +25,7 @@ export default async function AdminUsersPage() {
               <th className="p-3" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-stone-200">
+          <tbody className="divide-y divide-line">
             {users.map((u) => (
               <tr key={u.id}>
                 <td className="p-3">{u.name}</td>

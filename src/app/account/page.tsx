@@ -10,7 +10,7 @@ export default async function AccountPage() {
     <div className="grid gap-10 md:grid-cols-2">
       <section>
         <h1 className="page-title">Your details</h1>
-        <p className="mb-4 text-sm text-stone-600">Signed in as {user.email}</p>
+        <p className="mb-4 text-sm text-muted">Signed in as {user.email}</p>
         <ProfileForm
           defaults={{
             name: user.name,

@@ -48,12 +48,12 @@ export function Field({
         />
       )}
       {hint && !errors && (
-        <p id={`${name}-hint`} className="mt-1 text-xs text-stone-500">
+        <p id={`${name}-hint`} className="mt-1 text-xs text-muted">
           {hint}
         </p>
       )}
       {errors && (
-        <p id={`${name}-error`} className="mt-1 text-sm text-red-700">
+        <p id={`${name}-error`} className="mt-1 text-sm text-danger">
           {errors.join(" ")}
         </p>
       )}
@@ -64,7 +64,7 @@ export function Field({
 export function FormMessage({ state, tone = "error" }: { state: FormState; tone?: "error" | "success" }) {
   if (!state?.message) return null;
   return (
-    <p role="status" className={`text-sm ${tone === "error" ? "text-red-700" : "text-green-700"}`}>
+    <p role="status" className={`text-sm ${tone === "error" ? "text-danger" : "text-success"}`}>
       {state.message}
     </p>
   );

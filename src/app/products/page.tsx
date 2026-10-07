@@ -25,15 +25,17 @@ export default async function ProductsPage({
   ]);
 
   const chip = (active: boolean) =>
-    `rounded-full border px-3 py-1 text-sm ${
-      active ? "border-amber-700 bg-amber-700 text-white" : "border-stone-300 bg-white hover:bg-stone-100"
+    `rounded-full border px-4 py-1.5 text-sm transition ${
+      active
+        ? "border-accent bg-accent font-medium text-bg shadow-[0_0_24px_-6px_var(--color-accent)]"
+        : "border-line-strong bg-glass text-ink-soft hover:border-accent/60 hover:bg-glass-strong"
     }`;
 
   return (
     <div>
       <h1 className="page-title">Products</h1>
       {types.length > 0 && (
-        <div className="mb-6 flex flex-wrap gap-2">
+        <div className="mb-5 flex flex-wrap gap-2">
           <Link href="/products" className={chip(!type)}>
             All
           </Link>
@@ -49,7 +51,7 @@ export default async function ProductsPage({
         </div>
       )}
       {products.length === 0 ? (
-        <p className="text-stone-600">No products to show yet.</p>
+        <p className="text-muted">No products to show yet.</p>
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {products.map((p) => (

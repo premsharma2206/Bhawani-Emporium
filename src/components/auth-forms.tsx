@@ -20,9 +20,9 @@ export function LoginForm() {
       />
       <FormMessage state={state} />
       <SubmitButton>Log in</SubmitButton>
-      <p className="text-sm text-stone-600">
+      <p className="text-sm text-muted">
         New here?{" "}
-        <Link href="/signup" className="text-amber-800 underline">
+        <Link href="/signup" className="text-accent underline">
           Create an account
         </Link>
       </p>
@@ -58,9 +58,9 @@ export function SignupForm() {
       <Field label="Address" name="address" textarea state={state} />
       <FormMessage state={state} />
       <SubmitButton>Create account</SubmitButton>
-      <p className="text-sm text-stone-600">
+      <p className="text-sm text-muted">
         Already have an account?{" "}
-        <Link href="/login" className="text-amber-800 underline">
+        <Link href="/login" className="text-accent underline">
           Log in
         </Link>
       </p>

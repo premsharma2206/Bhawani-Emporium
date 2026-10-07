@@ -59,11 +59,11 @@ export function ProductForm({
           accept="image/jpeg,image/png,image/webp"
           className="block text-sm"
         />
-        <p className="mt-1 text-xs text-stone-500">
+        <p className="mt-1 text-xs text-muted">
           JPEG, PNG or WebP, up to 5 MB.
           {product?.imageUrl ? " Leave empty to keep the current photo." : ""}
         </p>
-        {imageErrors && <p className="mt-1 text-sm text-red-700">{imageErrors.join(" ")}</p>}
+        {imageErrors && <p className="mt-1 text-sm text-danger">{imageErrors.join(" ")}</p>}
       </div>
       <FormMessage state={state} />
       <div className="flex gap-3">

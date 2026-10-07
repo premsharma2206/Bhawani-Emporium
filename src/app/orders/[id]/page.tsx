@@ -44,26 +44,26 @@ export default async function OrderPage({
   return (
     <div className="mx-auto max-w-2xl">
       {placed && (
-        <p role="status" className="mb-6 rounded-md border border-green-300 bg-green-50 p-4 text-green-800">
+        <p role="status" className="mb-6 rounded-xl border border-success/30 bg-success/10 p-4 text-success">
           Your order is placed. Thank you for shopping with us.
         </p>
       )}
       <h1 className="page-title">Order #{order.id}</h1>
       <dl className="mb-6 grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:grid-cols-4">
         <div>
-          <dt className="text-stone-500">Placed</dt>
+          <dt className="text-muted">Placed</dt>
           <dd>{formatDate(order.createdAt)}</dd>
         </div>
         <div>
-          <dt className="text-stone-500">Status</dt>
+          <dt className="text-muted">Status</dt>
           <dd>{ORDER_STATUS_LABEL[order.status]}</dd>
         </div>
         <div>
-          <dt className="text-stone-500">Payment</dt>
+          <dt className="text-muted">Payment</dt>
           <dd>{PAYMENT_METHOD_LABEL[order.paymentMethod]}</dd>
         </div>
         <div>
-          <dt className="text-stone-500">Paid</dt>
+          <dt className="text-muted">Paid</dt>
           <dd>{PAYMENT_STATUS_LABEL[order.paymentStatus]}</dd>
         </div>
       </dl>
@@ -77,7 +77,7 @@ export default async function OrderPage({
         </div>
       )}
 
-      <ul className="card divide-y divide-stone-200 text-sm">
+      <ul className="card divide-y divide-line text-sm">
         {order.items.map((item) => (
           <li key={item.id} className="flex justify-between gap-4 p-4">
             <span>
@@ -93,17 +93,17 @@ export default async function OrderPage({
       </ul>
 
       <h2 className="mt-6 mb-1 font-semibold">Deliver to</h2>
-      <p className="text-sm text-stone-700">
+      <p className="text-sm text-ink-soft">
         {order.shipName}, {order.shipContact}
         <br />
         {order.shipAddress}, {order.shipCity}
       </p>
       {user.role === "ADMIN" && order.userId !== user.id && (
-        <p className="mt-4 text-sm text-stone-600">
+        <p className="mt-4 text-sm text-muted">
           Customer account: {order.user.name} ({order.user.email})
         </p>
       )}
-      {order.note && <p className="mt-4 text-sm text-stone-600">{order.note}</p>}
+      {order.note && <p className="mt-4 text-sm text-muted">{order.note}</p>}
 
       <Link href="/products" className="btn btn-secondary mt-8">
         Continue shopping

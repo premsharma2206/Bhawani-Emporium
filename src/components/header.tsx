@@ -3,51 +3,74 @@ import { logout } from "@/actions/auth";
 import { getCurrentUser } from "@/lib/dal";
 import { db } from "@/lib/db";
 
+const navLink = "rounded-full px-3 py-1.5 text-ink-soft transition hover:bg-glass-strong hover:text-ink";
+
 export async function Header() {
   const user = await getCurrentUser();
-  const cart = user
-    ? await db.cartItem.aggregate({ where: { userId: user.id }, _sum: { quantity: true } })
-    : null;
+  const isAdmin = user?.role === "ADMIN";
+  // Admins manage the shop rather than buy from it, so they get no cart link.
+  const cart =
+    user && !isAdmin
+      ? await db.cartItem.aggregate({ where: { userId: user.id }, _sum: { quantity: true } })
+      : null;
   const cartCount = cart?._sum.quantity ?? 0;
 
   return (
-    <header className="border-b border-stone-200 bg-white">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-4">
-        <Link href="/" className="text-lg font-semibold text-amber-800">
-          Bhawani Emporium
+    <header className="sticky top-0 z-40 border-b border-line bg-bg/70 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-3">
+        <Link href="/" className="group flex items-center gap-3">
+          <span
+            aria-hidden
+            className="grid size-9 rotate-45 place-items-center rounded-lg bg-linear-to-br from-accent-strong to-[#e79a2b] shadow-[0_0_28px_-6px_var(--color-accent)] transition group-hover:shadow-[0_0_36px_-4px_var(--color-accent)]"
+          >
+            <span className="-rotate-45 font-display text-base font-bold text-[#1b1303]">B</span>
+          </span>
+          <span className="font-display text-lg font-semibold tracking-tight">
+            Bhawani <span className="text-gradient">Emporium</span>
+          </span>
         </Link>
-        <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
-          <Link href="/products" className="hover:text-amber-800">
+        <nav className="flex flex-wrap items-center gap-x-1 gap-y-2 text-sm">
+          <Link href="/products" className={navLink}>
             Products
           </Link>
           {user ? (
             <>
-              <Link href="/cart" className="hover:text-amber-800">
-                Cart{cartCount > 0 ? ` (${cartCount})` : ""}
-              </Link>
-              <Link href="/orders" className="hover:text-amber-800">
+              {!isAdmin && (
+                <Link href="/cart" className={navLink}>
+                  Cart
+                  {cartCount > 0 && (
+                    <span className="ml-1.5 inline-grid min-w-5 place-items-center rounded-full bg-accent px-1.5 text-xs font-semibold text-bg">
+                      {cartCount}
+                    </span>
+                  )}
+                </Link>
+              )}
+              <Link href={isAdmin ? "/admin/orders" : "/orders"} className={navLink}>
                 Orders
               </Link>
-              <Link href="/account" className="hover:text-amber-800">
+              <Link href="/account" className={navLink}>
                 Account
               </Link>
-              {user.role === "ADMIN" && (
-                <Link href="/admin" className="font-medium text-amber-800">
+              {isAdmin && (
+                <Link
+                  href="/admin"
+                  className="rounded-full border border-accent/50 bg-accent/10 px-3 py-1.5 font-medium text-accent transition hover:bg-accent/20"
+                >
                   Admin
                 </Link>
               )}
               <form action={logout}>
-                <button type="submit" className="cursor-pointer hover:text-amber-800">
+                <button type="submit" className={`cursor-pointer ${navLink}`}>
                   Log out
                 </button>
               </form>
             </>
           ) : (
             <>
-              <Link href="/login" className="hover:text-amber-800">
+              <Link href="/login" className={navLink}>
                 Log in
               </Link>
-              <Link href="/signup" className="btn btn-primary">
+              <Link href="/signup" className="btn btn-primary ml-2">
                 Sign up
               </Link>
             </>

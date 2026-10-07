@@ -20,7 +20,7 @@ export default async function CartPage() {
     return (
       <div>
         <h1 className="page-title">Cart</h1>
-        <p className="text-stone-600">Your cart is empty.</p>
+        <p className="text-muted">Your cart is empty.</p>
         <Link href="/products" className="btn btn-primary mt-4">
           Browse products
         </Link>
@@ -31,14 +31,14 @@ export default async function CartPage() {
   return (
     <div>
       <h1 className="page-title">Cart</h1>
-      <ul className="card divide-y divide-stone-200">
+      <ul className="card divide-y divide-line">
         {items.map(({ product, quantity }) => (
           <li key={product.id} className="flex flex-wrap items-center justify-between gap-3 p-4">
             <div className="min-w-0">
-              <Link href={`/products/${product.id}`} className="font-medium hover:text-amber-800">
+              <Link href={`/products/${product.id}`} className="font-medium hover:text-accent">
                 {product.name}
               </Link>
-              <p className="text-sm text-stone-600">{formatPaise(product.pricePaise)} each</p>
+              <p className="text-sm text-muted">{formatPaise(product.pricePaise)} each</p>
             </div>
             <div className="flex items-center gap-3">
               <form action={setCartQuantity} className="flex items-center gap-2">

@@ -12,7 +12,7 @@ export function ProductImage({
   priority?: boolean;
 }) {
   return (
-    <div className="relative aspect-square overflow-hidden rounded-md bg-stone-100">
+    <div className="relative aspect-square overflow-hidden rounded-xl photo-well">
       {src ? (
         <Image
           src={src}
@@ -25,7 +25,7 @@ export function ProductImage({
           className="object-contain"
         />
       ) : (
-        <div className="flex h-full items-center justify-center text-sm text-stone-400">
+        <div className="flex h-full items-center justify-center text-sm text-stone-500">
           No photo
         </div>
       )}

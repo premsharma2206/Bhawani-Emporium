@@ -11,15 +11,15 @@ export default async function AdminProductsPage() {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold tracking-tight">Products</h1>
+      <div className="mb-4 flex items-center justify-between">
+        <h1 className="text-3xl font-semibold tracking-tight">Products</h1>
         <Link href="/admin/products/new" className="btn btn-primary">
           Add product
         </Link>
       </div>
       <div className="card overflow-x-auto">
         <table className="w-full text-left text-sm">
-          <thead className="border-b border-stone-200 text-stone-500">
+          <thead className="border-b border-line text-muted">
             <tr>
               <th className="p-3 font-medium">Name</th>
               <th className="p-3 font-medium">Type</th>
@@ -28,9 +28,9 @@ export default async function AdminProductsPage() {
               <th className="p-3" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-stone-200">
+          <tbody className="divide-y divide-line">
             {products.map((p) => (
-              <tr key={p.id} className={p.active ? "" : "text-stone-400"}>
+              <tr key={p.id} className={p.active ? "" : "text-faint"}>
                 <td className="p-3">{p.name}</td>
                 <td className="p-3">{p.productType}</td>
                 <td className="p-3">{formatPaise(p.pricePaise)}</td>
@@ -53,7 +53,7 @@ export default async function AdminProductsPage() {
             ))}
             {products.length === 0 && (
               <tr>
-                <td colSpan={5} className="p-3 text-stone-600">
+                <td colSpan={5} className="p-3 text-muted">
                   No products yet.
                 </td>
               </tr>

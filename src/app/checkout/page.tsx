@@ -43,7 +43,7 @@ export default async function CheckoutPage() {
             </li>
           ))}
         </ul>
-        <p className="mt-4 flex justify-between border-t border-stone-200 pt-3 font-semibold">
+        <p className="mt-4 flex justify-between border-t border-line pt-3 font-semibold">
           <span>Total</span>
           <span>{formatPaise(cartTotalPaise(items))}</span>
         </p>

@@ -24,7 +24,7 @@ export default async function AdminOrdersPage() {
       <h1 className="page-title">Orders</h1>
       <div className="card overflow-x-auto">
         <table className="w-full text-left text-sm">
-          <thead className="border-b border-stone-200 text-stone-500">
+          <thead className="border-b border-line text-muted">
             <tr>
               <th className="p-3 font-medium">Order</th>
               <th className="p-3 font-medium">Placed</th>
@@ -34,11 +34,11 @@ export default async function AdminOrdersPage() {
               <th className="p-3 font-medium">Status</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-stone-200">
+          <tbody className="divide-y divide-line">
             {orders.map((o) => (
               <tr key={o.id}>
                 <td className="p-3">
-                  <Link href={`/orders/${o.id}`} className="text-amber-800 underline">
+                  <Link href={`/orders/${o.id}`} className="text-accent underline">
                     #{o.id}
                   </Link>
                 </td>
@@ -46,13 +46,13 @@ export default async function AdminOrdersPage() {
                 <td className="p-3">
                   {o.shipName}
                   <br />
-                  <span className="text-stone-500">{o.user.email}</span>
+                  <span className="text-muted">{o.user.email}</span>
                 </td>
                 <td className="p-3">{formatPaise(o.totalPaise)}</td>
                 <td className="p-3">
                   {PAYMENT_METHOD_LABEL[o.paymentMethod]}
                   <br />
-                  <span className="text-stone-500">{PAYMENT_STATUS_LABEL[o.paymentStatus]}</span>
+                  <span className="text-muted">{PAYMENT_STATUS_LABEL[o.paymentStatus]}</span>
                 </td>
                 <td className="p-3">
                   <form action={setOrderStatus} className="flex items-center gap-2">
@@ -79,7 +79,7 @@ export default async function AdminOrdersPage() {
             ))}
             {orders.length === 0 && (
               <tr>
-                <td colSpan={6} className="p-3 text-stone-600">
+                <td colSpan={6} className="p-3 text-muted">
                   No orders yet.
                 </td>
               </tr>

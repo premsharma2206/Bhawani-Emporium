@@ -9,14 +9,14 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   await requireAdmin();
   return (
     <div>
-      <nav className="mb-6 flex gap-5 border-b border-stone-200 pb-3 text-sm font-medium">
-        <Link href="/admin" className="hover:text-amber-800">
+      <nav className="card mb-5 inline-flex gap-1 p-1 text-sm font-medium">
+        <Link href="/admin" className="rounded-xl px-4 py-1.5 text-ink-soft transition hover:bg-glass-strong hover:text-accent">
           Products
         </Link>
-        <Link href="/admin/orders" className="hover:text-amber-800">
+        <Link href="/admin/orders" className="rounded-xl px-4 py-1.5 text-ink-soft transition hover:bg-glass-strong hover:text-accent">
           Orders
         </Link>
-        <Link href="/admin/users" className="hover:text-amber-800">
+        <Link href="/admin/users" className="rounded-xl px-4 py-1.5 text-ink-soft transition hover:bg-glass-strong hover:text-accent">
           Users
         </Link>
       </nav>
