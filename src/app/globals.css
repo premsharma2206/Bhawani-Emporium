@@ -133,9 +133,9 @@
   .eyebrow {
     @apply inline-flex items-center gap-2 rounded-full border border-line bg-glass px-3 py-1 text-xs font-medium tracking-widest text-muted uppercase;
   }
-  /* Product photos are shot on a pale backdrop, so their frame stays light on the dark page. */
+  /* Product photos are shot on a black backdrop, so their frame is black to hide the edges. */
   .photo-well {
-    background: linear-gradient(160deg, #f6f4ef, #dedbd4);
+    background: #050506;
   }
 }
 

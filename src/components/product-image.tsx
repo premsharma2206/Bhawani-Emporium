@@ -25,7 +25,7 @@ export function ProductImage({
           className="object-contain"
         />
       ) : (
-        <div className="flex h-full items-center justify-center text-sm text-stone-500">
+        <div className="flex h-full items-center justify-center text-sm text-muted">
           No photo
         </div>
       )}
