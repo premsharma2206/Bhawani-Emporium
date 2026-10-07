@@ -21,7 +21,7 @@ export default async function CartPage() {
       <div>
         <h1 className="page-title">Cart</h1>
         <p className="text-muted">Your cart is empty.</p>
-        <Link href="/products" className="btn btn-primary mt-4">
+        <Link href="/products" className="btn btn-primary mt-3">
           Browse products
         </Link>
       </div>
@@ -33,7 +33,7 @@ export default async function CartPage() {
       <h1 className="page-title">Cart</h1>
       <ul className="card divide-y divide-line">
         {items.map(({ product, quantity }) => (
-          <li key={product.id} className="flex flex-wrap items-center justify-between gap-3 p-4">
+          <li key={product.id} className="flex flex-wrap items-center justify-between gap-3 p-3">
             <div className="min-w-0">
               <Link href={`/products/${product.id}`} className="font-medium hover:text-accent">
                 {product.name}
@@ -68,7 +68,7 @@ export default async function CartPage() {
           </li>
         ))}
       </ul>
-      <div className="mt-6 flex items-center justify-end gap-6">
+      <div className="mt-4 flex items-center justify-end gap-4">
         <p className="text-lg">
           Total: <span className="font-semibold">{formatPaise(cartTotalPaise(items))}</span>
         </p>

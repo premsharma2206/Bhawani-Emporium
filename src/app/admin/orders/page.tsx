@@ -26,35 +26,35 @@ export default async function AdminOrdersPage() {
         <table className="w-full text-left text-sm">
           <thead className="border-b border-line text-muted">
             <tr>
-              <th className="p-3 font-medium">Order</th>
-              <th className="p-3 font-medium">Placed</th>
-              <th className="p-3 font-medium">Customer</th>
-              <th className="p-3 font-medium">Total</th>
-              <th className="p-3 font-medium">Payment</th>
-              <th className="p-3 font-medium">Status</th>
+              <th className="px-3 py-2 font-medium">Order</th>
+              <th className="px-3 py-2 font-medium">Placed</th>
+              <th className="px-3 py-2 font-medium">Customer</th>
+              <th className="px-3 py-2 font-medium">Total</th>
+              <th className="px-3 py-2 font-medium">Payment</th>
+              <th className="px-3 py-2 font-medium">Status</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-line">
             {orders.map((o) => (
               <tr key={o.id}>
-                <td className="p-3">
+                <td className="px-3 py-2">
                   <Link href={`/orders/${o.id}`} className="text-accent underline">
                     #{o.id}
                   </Link>
                 </td>
-                <td className="p-3">{formatDate(o.createdAt)}</td>
-                <td className="p-3">
+                <td className="px-3 py-2">{formatDate(o.createdAt)}</td>
+                <td className="px-3 py-2">
                   {o.shipName}
                   <br />
                   <span className="text-muted">{o.user.email}</span>
                 </td>
-                <td className="p-3">{formatPaise(o.totalPaise)}</td>
-                <td className="p-3">
+                <td className="px-3 py-2">{formatPaise(o.totalPaise)}</td>
+                <td className="px-3 py-2">
                   {PAYMENT_METHOD_LABEL[o.paymentMethod]}
                   <br />
                   <span className="text-muted">{PAYMENT_STATUS_LABEL[o.paymentStatus]}</span>
                 </td>
-                <td className="p-3">
+                <td className="px-3 py-2">
                   <form action={setOrderStatus} className="flex items-center gap-2">
                     <input type="hidden" name="id" value={o.id} />
                     <label htmlFor={`status-${o.id}`} className="sr-only">
@@ -79,7 +79,7 @@ export default async function AdminOrdersPage() {
             ))}
             {orders.length === 0 && (
               <tr>
-                <td colSpan={6} className="p-3 text-muted">
+                <td colSpan={6} className="px-3 py-2 text-muted">
                   No orders yet.
                 </td>
               </tr>

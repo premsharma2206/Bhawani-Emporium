@@ -17,7 +17,9 @@ const email = z
 const contact = z
   .string()
   .trim()
-  .regex(/^[6-9]\d{9}$/, { error: "Enter a 10-digit mobile number." });
+  .regex(/^\d{10}$/, { error: "Enter a 10-digit mobile number, without +91." })
+  // Indian mobile numbers start with 6, 7, 8 or 9. Checked only once the length is right.
+  .regex(/^(?!\d{10}$)|^[6-9]/, { error: "Mobile numbers start with 6, 7, 8 or 9." });
 const city = z.string().trim().min(2, { error: "Enter your city." }).max(100);
 const address = z.string().trim().min(5, { error: "Enter your address." }).max(500);
 const newPassword = z

@@ -21,7 +21,7 @@ export function ProductForm({
   const [state, action] = useActionState(saveProduct, undefined);
   const imageErrors = state?.errors?.image;
   return (
-    <form action={action} className="max-w-xl space-y-4">
+    <form action={action} className="max-w-xl space-y-3">
       {product && <input type="hidden" name="id" value={product.id} />}
       <Field label="Name" name="name" defaultValue={product?.name} state={state} required />
       <Field

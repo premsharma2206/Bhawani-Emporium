@@ -8,7 +8,7 @@ import { Field, FormMessage, SubmitButton } from "@/components/form";
 export function LoginForm() {
   const [state, action] = useActionState(login, undefined);
   return (
-    <form action={action} className="space-y-4">
+    <form action={action} className="space-y-3">
       <Field label="Email" name="email" type="email" autoComplete="email" state={state} required />
       <Field
         label="Password"
@@ -33,7 +33,7 @@ export function LoginForm() {
 export function SignupForm() {
   const [state, action] = useActionState(signup, undefined);
   return (
-    <form action={action} className="space-y-4">
+    <form action={action} className="space-y-3">
       <Field label="Name" name="name" autoComplete="name" state={state} required />
       <Field label="Email" name="email" type="email" autoComplete="email" state={state} required />
       <Field
@@ -50,7 +50,7 @@ export function SignupForm() {
         name="contact"
         type="tel"
         autoComplete="tel-national"
-        hint="10 digits, without +91."
+        hint="10 digits starting with 6, 7, 8 or 9, without +91."
         state={state}
         required
       />

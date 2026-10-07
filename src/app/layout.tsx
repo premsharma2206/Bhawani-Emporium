@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
+import { Backdrop } from "@/components/backdrop";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import "./globals.css";
@@ -21,7 +22,8 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: { default: "Bhawani Emporium", template: "%s | Bhawani Emporium" },
-  description: "Handicrafts, gifts and novelties from Bhawani Emporium.",
+  description:
+    "Handicraft gifts and novelties from Bhawani Emporium. All types of brass and black metal handicrafts.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -31,8 +33,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <Backdrop />
         <Header />
-        <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 py-6">{children}</main>
+        <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 py-4">{children}</main>
         <Footer />
       </body>
     </html>

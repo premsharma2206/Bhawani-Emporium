@@ -17,23 +17,23 @@ export default async function AdminUsersPage() {
         <table className="w-full text-left text-sm">
           <thead className="border-b border-line text-muted">
             <tr>
-              <th className="p-3 font-medium">Name</th>
-              <th className="p-3 font-medium">Email</th>
-              <th className="p-3 font-medium">Mobile</th>
-              <th className="p-3 font-medium">City</th>
-              <th className="p-3 font-medium">Role</th>
-              <th className="p-3" />
+              <th className="px-3 py-2 font-medium">Name</th>
+              <th className="px-3 py-2 font-medium">Email</th>
+              <th className="px-3 py-2 font-medium">Mobile</th>
+              <th className="px-3 py-2 font-medium">City</th>
+              <th className="px-3 py-2 font-medium">Role</th>
+              <th className="px-3 py-2" />
             </tr>
           </thead>
           <tbody className="divide-y divide-line">
             {users.map((u) => (
               <tr key={u.id}>
-                <td className="p-3">{u.name}</td>
-                <td className="p-3">{u.email}</td>
-                <td className="p-3">{u.contact}</td>
-                <td className="p-3">{u.city}</td>
-                <td className="p-3">{u.role === "ADMIN" ? "Admin" : "Customer"}</td>
-                <td className="p-3 text-right">
+                <td className="px-3 py-2">{u.name}</td>
+                <td className="px-3 py-2">{u.email}</td>
+                <td className="px-3 py-2">{u.contact}</td>
+                <td className="px-3 py-2">{u.city}</td>
+                <td className="px-3 py-2">{u.role === "ADMIN" ? "Admin" : "Customer"}</td>
+                <td className="px-3 py-2 text-right">
                   {u.id !== admin.id && (
                     <form action={setUserRole}>
                       <input type="hidden" name="id" value={u.id} />

@@ -14,6 +14,7 @@
     "db:deploy": "prisma migrate deploy",
     "db:seed": "prisma db seed",
     "import:legacy": "tsx scripts/import-legacy.ts",
+    "import:instagram": "tsx scripts/import-instagram.ts",
     "make-admin": "tsx scripts/make-admin.ts"
   },
   "dependencies": {

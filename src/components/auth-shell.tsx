@@ -16,14 +16,14 @@ export function AuthShell({
 }) {
   return (
     <div className="card my-auto grid w-full max-w-4xl animate-rise self-center overflow-hidden md:grid-cols-[1fr_1.1fr]">
-      <aside className="relative hidden flex-col justify-between gap-8 border-r border-line p-8 md:flex">
+      <aside className="relative hidden flex-col justify-between gap-5 border-r border-line p-5 md:flex">
         <div
           aria-hidden
           className="absolute inset-0 bg-[radial-gradient(28rem_20rem_at_0%_0%,rgb(246_196_83/0.22),transparent_65%),radial-gradient(24rem_18rem_at_100%_100%,rgb(94_234_212/0.14),transparent_65%)]"
         />
         <div className="relative">
           <p className="eyebrow">Bhawani Emporium</p>
-          <p className="mt-4 font-display text-3xl leading-tight font-semibold tracking-tight">
+          <p className="mt-3 font-display text-3xl leading-tight font-semibold tracking-tight">
             Handicrafts, gifts and <span className="text-gradient">novelties</span>
           </p>
         </div>
@@ -36,9 +36,9 @@ export function AuthShell({
           ))}
         </ul>
       </aside>
-      <div className="p-6 sm:p-8">
+      <div className="p-4 sm:p-5">
         <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
-        <p className="mt-1 mb-5 text-sm text-muted">{subtitle}</p>
+        <p className="mt-1 mb-3 text-sm text-muted">{subtitle}</p>
         {children}
       </div>
     </div>

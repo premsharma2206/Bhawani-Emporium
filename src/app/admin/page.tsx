@@ -11,7 +11,7 @@ export default async function AdminProductsPage() {
 
   return (
     <div>
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-3 flex items-center justify-between">
         <h1 className="text-3xl font-semibold tracking-tight">Products</h1>
         <Link href="/admin/products/new" className="btn btn-primary">
           Add product
@@ -21,39 +21,45 @@ export default async function AdminProductsPage() {
         <table className="w-full text-left text-sm">
           <thead className="border-b border-line text-muted">
             <tr>
-              <th className="p-3 font-medium">Name</th>
-              <th className="p-3 font-medium">Type</th>
-              <th className="p-3 font-medium">Price</th>
-              <th className="p-3 font-medium">Status</th>
-              <th className="p-3" />
+              <th className="px-3 py-2 font-medium">Name</th>
+              <th className="px-3 py-2 font-medium">Type</th>
+              <th className="px-3 py-2 font-medium">Price</th>
+              <th className="px-3 py-2 font-medium">Status</th>
+              <th className="px-3 py-2" />
             </tr>
           </thead>
           <tbody className="divide-y divide-line">
             {products.map((p) => (
               <tr key={p.id} className={p.active ? "" : "text-faint"}>
-                <td className="p-3">{p.name}</td>
-                <td className="p-3">{p.productType}</td>
-                <td className="p-3">{formatPaise(p.pricePaise)}</td>
-                <td className="p-3">{p.active ? "On sale" : "Hidden"}</td>
-                <td className="p-3">
+                <td className="px-3 py-2">{p.name}</td>
+                <td className="px-3 py-2">{p.productType}</td>
+                <td className="px-3 py-2">
+                  {p.pricePaise > 0 ? formatPaise(p.pricePaise) : "Not set"}
+                </td>
+                <td className="px-3 py-2">
+                  {p.active ? "On sale" : p.pricePaise > 0 ? "Hidden" : "Draft: needs a price"}
+                </td>
+                <td className="px-3 py-2">
                   <div className="flex justify-end gap-2">
                     <Link href={`/admin/products/${p.id}/edit`} className="btn btn-secondary">
                       Edit
                     </Link>
-                    <form action={setProductActive}>
-                      <input type="hidden" name="id" value={p.id} />
-                      <input type="hidden" name="active" value={String(!p.active)} />
-                      <SubmitButton className={p.active ? "btn btn-danger" : "btn btn-secondary"}>
-                        {p.active ? "Hide" : "Restore"}
-                      </SubmitButton>
-                    </form>
+                    {(p.active || p.pricePaise > 0) && (
+                      <form action={setProductActive}>
+                        <input type="hidden" name="id" value={p.id} />
+                        <input type="hidden" name="active" value={String(!p.active)} />
+                        <SubmitButton className={p.active ? "btn btn-danger" : "btn btn-secondary"}>
+                          {p.active ? "Hide" : "Restore"}
+                        </SubmitButton>
+                      </form>
+                    )}
                   </div>
                 </td>
               </tr>
             ))}
             {products.length === 0 && (
               <tr>
-                <td colSpan={5} className="p-3 text-muted">
+                <td colSpan={5} className="px-3 py-2 text-muted">
                   No products yet.
                 </td>
               </tr>

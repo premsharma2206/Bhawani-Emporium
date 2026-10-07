@@ -18,7 +18,7 @@ export default async function CheckoutPage() {
   if (items.length === 0) redirect("/cart");
 
   return (
-    <div className="grid gap-8 md:grid-cols-2">
+    <div className="grid gap-5 md:grid-cols-2">
       <div>
         <h1 className="page-title">Checkout</h1>
         <CheckoutForm
@@ -31,11 +31,11 @@ export default async function CheckoutPage() {
           onlinePayment={razorpayEnabled()}
         />
       </div>
-      <aside className="card h-fit p-4">
+      <aside className="card h-fit p-3">
         <h2 className="mb-3 font-semibold">Order summary</h2>
         <ul className="space-y-2 text-sm">
           {items.map(({ product, quantity }) => (
-            <li key={product.id} className="flex justify-between gap-4">
+            <li key={product.id} className="flex justify-between gap-3">
               <span>
                 {quantity} × {product.name}
               </span>
@@ -43,7 +43,7 @@ export default async function CheckoutPage() {
             </li>
           ))}
         </ul>
-        <p className="mt-4 flex justify-between border-t border-line pt-3 font-semibold">
+        <p className="mt-3 flex justify-between border-t border-line pt-3 font-semibold">
           <span>Total</span>
           <span>{formatPaise(cartTotalPaise(items))}</span>
         </p>

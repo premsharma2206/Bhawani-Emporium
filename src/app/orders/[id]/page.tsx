@@ -44,12 +44,12 @@ export default async function OrderPage({
   return (
     <div className="mx-auto max-w-2xl">
       {placed && (
-        <p role="status" className="mb-6 rounded-xl border border-success/30 bg-success/10 p-4 text-success">
+        <p role="status" className="mb-4 rounded-xl border border-success/30 bg-success/10 p-3 text-success">
           Your order is placed. Thank you for shopping with us.
         </p>
       )}
       <h1 className="page-title">Order #{order.id}</h1>
-      <dl className="mb-6 grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:grid-cols-4">
+      <dl className="mb-4 grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:grid-cols-4">
         <div>
           <dt className="text-muted">Placed</dt>
           <dd>{formatDate(order.createdAt)}</dd>
@@ -69,7 +69,7 @@ export default async function OrderPage({
       </dl>
 
       {canPay && (
-        <div className="mb-6">
+        <div className="mb-4">
           <PayButton
             orderId={order.id}
             customer={{ name: order.shipName, email: user.email, contact: order.shipContact }}
@@ -79,33 +79,33 @@ export default async function OrderPage({
 
       <ul className="card divide-y divide-line text-sm">
         {order.items.map((item) => (
-          <li key={item.id} className="flex justify-between gap-4 p-4">
+          <li key={item.id} className="flex justify-between gap-3 p-3">
             <span>
               {item.quantity} × {item.name}
             </span>
             <span>{formatPaise(item.pricePaise * item.quantity)}</span>
           </li>
         ))}
-        <li className="flex justify-between gap-4 p-4 font-semibold">
+        <li className="flex justify-between gap-3 p-3 font-semibold">
           <span>Total</span>
           <span>{formatPaise(order.totalPaise)}</span>
         </li>
       </ul>
 
-      <h2 className="mt-6 mb-1 font-semibold">Deliver to</h2>
+      <h2 className="mt-4 mb-1 font-semibold">Deliver to</h2>
       <p className="text-sm text-ink-soft">
         {order.shipName}, {order.shipContact}
         <br />
         {order.shipAddress}, {order.shipCity}
       </p>
       {user.role === "ADMIN" && order.userId !== user.id && (
-        <p className="mt-4 text-sm text-muted">
+        <p className="mt-3 text-sm text-muted">
           Customer account: {order.user.name} ({order.user.email})
         </p>
       )}
-      {order.note && <p className="mt-4 text-sm text-muted">{order.note}</p>}
+      {order.note && <p className="mt-3 text-sm text-muted">{order.note}</p>}
 
-      <Link href="/products" className="btn btn-secondary mt-8">
+      <Link href="/products" className="btn btn-secondary mt-5">
         Continue shopping
       </Link>
     </div>

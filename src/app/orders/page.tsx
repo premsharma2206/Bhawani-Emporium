@@ -29,7 +29,7 @@ export default async function OrdersPage() {
             <li key={o.id}>
               <Link
                 href={`/orders/${o.id}`}
-                className="flex flex-wrap items-center justify-between gap-3 p-4 hover:bg-glass-strong"
+                className="flex flex-wrap items-center justify-between gap-3 p-3 hover:bg-glass-strong"
               >
                 <div>
                   <p className="font-medium">Order #{o.id}</p>

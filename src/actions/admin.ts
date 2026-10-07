@@ -54,9 +54,11 @@ export async function setProductActive(formData: FormData) {
     .object({ id, active: z.enum(["true", "false"]) })
     .safeParse(Object.fromEntries(formData));
   if (!parsed.success) return;
-  await db.product.update({
-    where: { id: parsed.data.id },
-    data: { active: parsed.data.active === "true" },
+  const active = parsed.data.active === "true";
+  // A product without a price (an imported draft) cannot go on sale.
+  await db.product.updateMany({
+    where: { id: parsed.data.id, ...(active ? { pricePaise: { gt: 0 } } : {}) },
+    data: { active },
   });
   revalidatePath("/", "layout");
 }

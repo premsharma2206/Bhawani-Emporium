@@ -14,11 +14,12 @@ export function CheckoutForm({
   const [state, action] = useActionState(placeOrder, undefined);
   const method = state?.values?.paymentMethod ?? "PAY_ON_DELIVERY";
   return (
-    <form action={action} className="space-y-4">
+    <form action={action} className="space-y-3">
       <Field label="Name" name="shipName" defaultValue={defaults.shipName} state={state} required />
       <Field
         label="Mobile number"
         name="shipContact"
+        hint="10 digits starting with 6, 7, 8 or 9, without +91."
         type="tel"
         defaultValue={defaults.shipContact}
         state={state}

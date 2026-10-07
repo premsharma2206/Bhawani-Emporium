@@ -11,11 +11,12 @@ export function ProfileForm({
 }) {
   const [state, action] = useActionState(updateProfile, undefined);
   return (
-    <form action={action} className="space-y-4">
+    <form action={action} className="space-y-3">
       <Field label="Name" name="name" defaultValue={defaults.name} state={state} required />
       <Field
         label="Mobile number"
         name="contact"
+        hint="10 digits starting with 6, 7, 8 or 9, without +91."
         type="tel"
         defaultValue={defaults.contact}
         state={state}
@@ -32,7 +33,7 @@ export function ProfileForm({
 export function PasswordForm() {
   const [state, action] = useActionState(changePassword, undefined);
   return (
-    <form action={action} className="space-y-4">
+    <form action={action} className="space-y-3">
       <Field
         label="Current password"
         name="currentPassword"

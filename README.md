@@ -35,6 +35,7 @@ Log in with `ADMIN_EMAIL` / `ADMIN_PASSWORD` to reach the admin area at `/admin`
 | `npm run db:seed` | Create the admin account and sample products |
 | `npm run make-admin -- <email>` | Give an existing account the admin role |
 | `npm run import:legacy -- <export.json> [old-site-dir]` | Import data from the old PHP site |
+| `npm run import:instagram` | Add the products listed in `scripts/instagram-products.json` at a default price of ₹10,000 |
 
 ## Optional services
 
