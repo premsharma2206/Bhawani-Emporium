@@ -42,7 +42,8 @@ export async function saveImage(buf: Buffer): Promise<string> {
     return new Promise((resolve, reject) => {
       cloudinary.uploader
         .upload_stream({ folder: "bhawani-emporium", resource_type: "image" }, (err, result) => {
-          if (err || !result) reject(err ?? new Error("Image upload failed."));
+          // Cloudinary reports errors as plain objects, so wrap them to keep the reason visible.
+          if (err || !result) reject(new Error(`Image upload failed: ${err?.message ?? "no response"}.`));
           else resolve(result.secure_url);
         })
         .end(buf);
