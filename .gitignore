@@ -47,3 +47,6 @@ next-env.d.ts
 /src/generated/
 /.uploads/
 /legacy-export/
+
+# Local Netlify folder
+.netlify
