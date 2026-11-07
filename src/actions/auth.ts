@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { hashPassword, verifyPassword } from "@/lib/password";
 import { createSession, deleteSession } from "@/lib/session";
+import { storeOpen } from "@/lib/store";
 import {
   type FormState,
   LoginSchema,
@@ -14,6 +15,7 @@ import {
 
 export async function signup(_state: FormState, formData: FormData): Promise<FormState> {
   const values = formValues(formData);
+  if (!storeOpen()) return { message: "Sign-ups are closed for now.", values };
   const parsed = SignupSchema.safeParse(Object.fromEntries(formData));
   if (!parsed.success) return { errors: fieldErrors(parsed.error), values };
 

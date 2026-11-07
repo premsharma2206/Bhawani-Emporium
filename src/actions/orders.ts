@@ -7,11 +7,13 @@ import { db } from "@/lib/db";
 import { sendOrderEmails } from "@/lib/email";
 import { cartTotalPaise } from "@/lib/money";
 import { createRazorpayOrder, razorpayEnabled, verifyPaymentSignature } from "@/lib/razorpay";
+import { storeOpen } from "@/lib/store";
 import { CheckoutSchema, type FormState, fieldErrors, formValues } from "@/lib/validation";
 
 export async function placeOrder(_state: FormState, formData: FormData): Promise<FormState> {
   const user = await requireUser();
   const values = formValues(formData);
+  if (!storeOpen()) return { message: "Online ordering is closed for now.", values };
   const parsed = CheckoutSchema.safeParse(Object.fromEntries(formData));
   if (!parsed.success) return { errors: fieldErrors(parsed.error), values };
   if (parsed.data.paymentMethod === "RAZORPAY" && !razorpayEnabled()) {

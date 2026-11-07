@@ -5,11 +5,13 @@ import { requireUser } from "@/lib/dal";
 import { db } from "@/lib/db";
 import { cartTotalPaise, formatPaise } from "@/lib/money";
 import { razorpayEnabled } from "@/lib/razorpay";
+import { storeOpen } from "@/lib/store";
 
 export const metadata: Metadata = { title: "Checkout" };
 
 export default async function CheckoutPage() {
   const user = await requireUser();
+  if (!storeOpen()) redirect("/products");
   const items = await db.cartItem.findMany({
     where: { userId: user.id, product: { active: true } },
     include: { product: true },

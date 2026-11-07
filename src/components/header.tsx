@@ -3,6 +3,7 @@ import { logout } from "@/actions/auth";
 import { CartButton, CartDrawer, type CartLine } from "@/components/cart-drawer";
 import { getCurrentUser } from "@/lib/dal";
 import { db } from "@/lib/db";
+import { storeOpen } from "@/lib/store";
 
 const navLink =
   "rounded-full px-3 py-1.5 text-ink-soft transition hover:bg-glass-strong hover:text-ink";
@@ -10,8 +11,9 @@ const navLink =
 export async function Header() {
   const user = await getCurrentUser();
   const isAdmin = user?.role === "ADMIN";
+  const open = storeOpen();
   // Admins manage the shop rather than buy from it, so they get no cart link.
-  const showCart = !!user && !isAdmin;
+  const showCart = open && !!user && !isAdmin;
   const cartItems = showCart
     ? await db.cartItem.findMany({
         where: { userId: user.id, product: { active: true } },
@@ -75,9 +77,11 @@ export async function Header() {
                 <Link href="/login" className={navLink}>
                   Log in
                 </Link>
-                <Link href="/signup" className="btn btn-primary ml-2">
-                  Sign up
-                </Link>
+                {open && (
+                  <Link href="/signup" className="btn btn-primary ml-2">
+                    Sign up
+                  </Link>
+                )}
               </>
             )}
           </nav>

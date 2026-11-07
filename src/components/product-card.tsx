@@ -3,6 +3,7 @@ import { AddToCartButton } from "@/components/add-to-cart";
 import { ProductImage } from "@/components/product-image";
 import { getCurrentUser } from "@/lib/dal";
 import { formatPaise } from "@/lib/money";
+import { storeOpen } from "@/lib/store";
 
 export async function ProductCard({
   product,
@@ -42,7 +43,7 @@ export async function ProductCard({
         <p className="font-display text-base font-semibold text-accent">
           {formatPaise(product.pricePaise)}
         </p>
-        {user && user.role !== "ADMIN" ? (
+        {storeOpen() && user && user.role !== "ADMIN" ? (
           <AddToCartButton productId={product.id} className="btn btn-secondary px-3 py-1.5 text-xs">
             Add to cart
           </AddToCartButton>

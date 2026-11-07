@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { removeFromCart, setCartQuantity } from "@/actions/cart";
 import { SubmitButton } from "@/components/form";
 import { requireUser } from "@/lib/dal";
 import { db } from "@/lib/db";
 import { cartTotalPaise, formatPaise } from "@/lib/money";
+import { storeOpen } from "@/lib/store";
 
 export const metadata: Metadata = { title: "Cart" };
 
 export default async function CartPage() {
   const user = await requireUser();
+  if (!storeOpen()) redirect("/products");
   const items = await db.cartItem.findMany({
     where: { userId: user.id, product: { active: true } },
     include: { product: true },

@@ -4,12 +4,14 @@ import { revalidatePath } from "next/cache";
 import * as z from "zod";
 import { requireUser } from "@/lib/dal";
 import { db } from "@/lib/db";
+import { storeOpen } from "@/lib/store";
 
 const MAX_QUANTITY = 20;
 const productId = z.coerce.number().int().positive();
 
 export async function addToCart(formData: FormData) {
   const user = await requireUser();
+  if (!storeOpen()) return;
   const id = productId.safeParse(formData.get("productId"));
   if (!id.success) return;
 
@@ -32,6 +34,7 @@ export async function addToCart(formData: FormData) {
 
 export async function setCartQuantity(formData: FormData) {
   const user = await requireUser();
+  if (!storeOpen()) return;
   const parsed = z
     .object({ productId, quantity: z.coerce.number().int().min(0).max(MAX_QUANTITY) })
     .safeParse(Object.fromEntries(formData));

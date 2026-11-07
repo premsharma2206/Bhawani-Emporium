@@ -36,6 +36,8 @@ export const SignupSchema = z.object({
   address,
 });
 
+export const NewAdminSchema = z.object({ name, email, password: newPassword });
+
 export const LoginSchema = z.object({
   email,
   password: z.string().min(1, { error: "Enter your password." }),

@@ -37,6 +37,10 @@ Log in with `ADMIN_EMAIL` / `ADMIN_PASSWORD` to reach the admin area at `/admin`
 | `npm run import:legacy -- <export.json> [old-site-dir]` | Import data from the old PHP site |
 | `npm run import:instagram` | Add the products listed in `scripts/instagram-products.json` at a default price of ₹10,000 |
 
+## Opening the shop
+
+Until `STORE_OPEN="true"` is set, the site is admin-only: anyone can browse the catalogue, but sign-up, carts and checkout are switched off. Admins add each other under **Admin → Users** with a starting password, which the new admin changes under **Account**.
+
 ## Optional services
 
 Each one is switched on by its environment variables in `.env`. Without them the site still works:

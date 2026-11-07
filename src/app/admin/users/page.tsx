@@ -1,5 +1,6 @@
 import { setUserRole } from "@/actions/admin";
 import { SubmitButton } from "@/components/form";
+import { NewAdminForm } from "@/components/new-admin-form";
 import { requireAdmin } from "@/lib/dal";
 import { db } from "@/lib/db";
 
@@ -13,6 +14,9 @@ export default async function AdminUsersPage() {
   return (
     <div>
       <h1 className="page-title">Users</h1>
+      <h2 className="mb-2 text-lg font-semibold">Add an admin</h2>
+      <NewAdminForm />
+      <h2 className="mt-5 mb-2 text-lg font-semibold">All accounts</h2>
       <div className="card overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead className="border-b border-line text-muted">

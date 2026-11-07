@@ -7,7 +7,14 @@ import { requireAdmin } from "@/lib/dal";
 import { db } from "@/lib/db";
 import { MAX_IMAGE_BYTES, saveImage } from "@/lib/images";
 import { rupeesToPaise } from "@/lib/money";
-import { type FormState, ProductSchema, fieldErrors, formValues } from "@/lib/validation";
+import { hashPassword } from "@/lib/password";
+import {
+  type FormState,
+  NewAdminSchema,
+  ProductSchema,
+  fieldErrors,
+  formValues,
+} from "@/lib/validation";
 
 const id = z.coerce.number().int().positive();
 
@@ -82,4 +89,26 @@ export async function setUserRole(formData: FormData) {
   if (!parsed.success || parsed.data.id === admin.id) return;
   await db.user.update({ where: { id: parsed.data.id }, data: { role: parsed.data.role } });
   revalidatePath("/admin/users");
+}
+
+/** Creates an admin account with a starting password, which the new admin changes on the Account page. */
+export async function createAdmin(_state: FormState, formData: FormData): Promise<FormState> {
+  await requireAdmin();
+  const values = formValues(formData);
+  const parsed = NewAdminSchema.safeParse(Object.fromEntries(formData));
+  if (!parsed.success) return { errors: fieldErrors(parsed.error), values };
+
+  const { password, ...profile } = parsed.data;
+  const existing = await db.user.findUnique({ where: { email: profile.email } });
+  if (existing) {
+    return {
+      errors: { email: ["This email already has an account. Use Make admin in the list below."] },
+      values,
+    };
+  }
+  await db.user.create({
+    data: { ...profile, passwordHash: await hashPassword(password), role: "ADMIN" },
+  });
+  revalidatePath("/admin/users");
+  return { message: `${profile.email} can now log in as an admin.` };
 }

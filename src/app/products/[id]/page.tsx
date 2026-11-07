@@ -8,6 +8,7 @@ import { ProductImage } from "@/components/product-image";
 import { getCurrentUser } from "@/lib/dal";
 import { db } from "@/lib/db";
 import { formatPaise } from "@/lib/money";
+import { storeOpen } from "@/lib/store";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -69,6 +70,8 @@ export default async function ProductPage({ params }: Props) {
               <Link href={`/admin/products/${product.id}/edit`} className="btn btn-secondary">
                 Edit product
               </Link>
+            ) : !storeOpen() ? (
+              <p className="text-sm text-muted">Online ordering opens soon.</p>
             ) : user ? (
               <AddToCartButton productId={product.id}>
                 {inCart ? "Add another" : "Add to cart"}

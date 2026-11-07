@@ -5,7 +5,7 @@ import { useActionState } from "react";
 import { login, signup } from "@/actions/auth";
 import { Field, FormMessage, SubmitButton } from "@/components/form";
 
-export function LoginForm() {
+export function LoginForm({ signupOpen }: { signupOpen: boolean }) {
   const [state, action] = useActionState(login, undefined);
   return (
     <form action={action} className="space-y-3">
@@ -20,12 +20,14 @@ export function LoginForm() {
       />
       <FormMessage state={state} />
       <SubmitButton>Log in</SubmitButton>
-      <p className="text-sm text-muted">
-        New here?{" "}
-        <Link href="/signup" className="text-accent underline">
-          Create an account
-        </Link>
-      </p>
+      {signupOpen && (
+        <p className="text-sm text-muted">
+          New here?{" "}
+          <Link href="/signup" className="text-accent underline">
+            Create an account
+          </Link>
+        </p>
+      )}
     </form>
   );
 }
