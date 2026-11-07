@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { setProductActive } from "@/actions/admin";
+import { DeleteProductButton } from "@/components/delete-product-button";
 import { SubmitButton } from "@/components/form";
 import { requireAdmin } from "@/lib/dal";
 import { db } from "@/lib/db";
@@ -40,7 +41,7 @@ export default async function AdminProductsPage() {
                   {p.active ? "On sale" : p.pricePaise > 0 ? "Hidden" : "Draft: needs a price"}
                 </td>
                 <td className="px-3 py-2">
-                  <div className="flex justify-end gap-2">
+                  <div className="flex flex-wrap items-center justify-end gap-2">
                     <Link href={`/admin/products/${p.id}/edit`} className="btn btn-secondary">
                       Edit
                     </Link>
@@ -53,6 +54,7 @@ export default async function AdminProductsPage() {
                         </SubmitButton>
                       </form>
                     )}
+                    {!p.active && <DeleteProductButton id={p.id} name={p.name} />}
                   </div>
                 </td>
               </tr>

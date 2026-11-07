@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import * as z from "zod";
 import { requireAdmin } from "@/lib/dal";
 import { db } from "@/lib/db";
-import { MAX_IMAGE_BYTES, saveImage } from "@/lib/images";
+import { MAX_IMAGE_BYTES, deleteImage, saveImage } from "@/lib/images";
 import { rupeesToPaise } from "@/lib/money";
 import { hashPassword } from "@/lib/password";
 import {
@@ -67,6 +67,26 @@ export async function setProductActive(formData: FormData) {
     where: { id: parsed.data.id, ...(active ? { pricePaise: { gt: 0 } } : {}) },
     data: { active },
   });
+  revalidatePath("/", "layout");
+}
+
+/** Permanently deletes a hidden product. Past orders keep their own copy of its name and price. */
+export async function deleteProduct(formData: FormData) {
+  await requireAdmin();
+  const parsed = id.safeParse(formData.get("id"));
+  if (!parsed.success) return;
+  // Only hidden products can be deleted, so a product on sale is never removed by one click.
+  const product = await db.product.findFirst({ where: { id: parsed.data, active: false } });
+  if (!product) return;
+  await db.product.delete({ where: { id: product.id } });
+
+  if (product.imageUrl) {
+    const inUse = await db.product.count({ where: { imageUrl: product.imageUrl } });
+    if (inUse === 0) {
+      // The product is already gone; a photo left behind only costs storage, so just log it.
+      await deleteImage(product.imageUrl).catch((err) => console.error("Could not delete photo:", err));
+    }
+  }
   revalidatePath("/", "layout");
 }
 

@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { v2 as cloudinary } from "cloudinary";
 
@@ -53,4 +53,23 @@ export async function saveImage(buf: Buffer): Promise<string> {
   await mkdir(uploadDir(), { recursive: true });
   await writeFile(path.join(uploadDir(), name), buf);
   return `/uploads/${name}`;
+}
+
+const CLOUDINARY_FOLDER = /^https:\/\/res\.cloudinary\.com\/[^/]+\/image\/upload\/(?:v\d+\/)?(bhawani-emporium\/[^/.]+)\.\w+$/;
+const LOCAL_UPLOAD = /^\/uploads\/([0-9a-f-]{36}\.(?:jpg|png|webp))$/;
+
+/** Cloudinary public id of a photo this site uploaded, or null for any other URL. */
+export function cloudinaryPublicId(url: string): string | null {
+  return CLOUDINARY_FOLDER.exec(url)?.[1] ?? null;
+}
+
+/** Deletes a photo saved by saveImage. Photos that ship with the site in public/ are left alone. */
+export async function deleteImage(url: string) {
+  const publicId = cloudinaryPublicId(url);
+  if (publicId) {
+    if (process.env.CLOUDINARY_URL) await cloudinary.uploader.destroy(publicId);
+    return;
+  }
+  const local = LOCAL_UPLOAD.exec(url);
+  if (local) await unlink(path.join(uploadDir(), local[1]));
 }
